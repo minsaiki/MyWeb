@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IT Website</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>IT Website</h1>
+            <nav>
+                <ul>
+                    <li><a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-house-plus"><path d="M13.22 2.416a2 2 0 0 0-2.511.057l-7 5.999A2 2 0 0 0 3 10v9a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7.354"/><path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"/><path d="M15 6h6"/><path d="M18 3v6"/></svg>Home</a></li>
+                    <li><a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shopping-cart"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg>Product</a></li>
+                    <li><a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-ellipsis"><circle cx="12" cy="12" r="10"/><path d="M17 12h.01"/><path d="M12 12h.01"/><path d="M7 12h.01"/></svg>Abour</a></li>
+                    <li><a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-headset"><path d="M3 11h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-5Zm0 0a9 9 0 1 1 18 0m0 0v5a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3Z"/><path d="M21 16v2a4 4 0 0 1-4 4h-5"/></svg>Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="carousel">
+        <div class="carousel-images" id="carouselImages">
+            <div class="carousel-slide"><img src="img/depositphotos_234473658-stock-photo-splashing-wave-black-sea-night.jpg" alt="" class="carousel-image"></div>
+            <div class="carousel-slide"><img src="img/photo-1566342088293-38debd381c63.jpg" alt="" class="carousel-image"></div>
+            <div class="carousel-slide"><img src="img/IMG_5714.JPG" alt="" class="carousel-image"></div>
+            <div class="carousel-slide"><img src="img/IMG_5719.JPG" alt="" class="carousel-image"></div>
+            <div class="carousel-slide"><img src="img/depositphotos_234473658-stock-photo-splashing-wave-black-sea-night.jpg" alt="" class="carousel-image"></div>
+            <div class="carousel-slide"><img src="img/photo-1566342088293-38debd381c63.jpg" alt="" class="carousel-image"></div>
+        </div>
+        <button class="carousel-button left" onclick="moveCarousel(-1)">&#10094;</button>
+        <button class="carousel-button right" onclick="moveCarousel(1)">&#10095;</button>
+
+        <div class="carousel-indicators" id="carouselIndicators">
+            <span class="indicator active" onclick="jumbToSlide(0)"></span>
+            <span class="indicator" onclick="jumbToSlide(1)"></span>
+            <span class="indicator" onclick="jumbToSlide(2)"></span>
+            <span class="indicator" onclick="jumbToSlide(3)"></span>
+        </div>
+    </div>
+
+    <div class="content">
+        <h2>Welcome to IT Shopping</h2>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Harum quidem eius accusantium! Iste saepe nesciunt nihil vel minima alias omnis rerum in, doloribus repellat eius. Consectetur eum ad veniam corrupti!</p>
+    </div>
+
+    <footer>
+        <p>IT Shopping &copy; 2024</p>
+    </footer>
+
+
+    <script>
+    let currentSlide = 1;
+        const totalSlide = document.querySelectorAll('.carousel-image').length - 2;
+        const carouselImages = document.getElementById('carouselImages');
+        const indicators = document.querySelectorAll('.indicator');
+        let autoSlideTimeout;
+
+        function setInitialPosition() {
+            carouselImages.style.transition = 'none';
+            carouselImages.style.transform = `translateX(${-currentSlide * 100}%)`;
+            setTimeout(() => {
+                carouselImages.style.transition = 'transform 1s ease-in-out';
+            }, 50);
+        }
+
+        function updateCarousel() {
+            carouselImages.style.transform = `translateX(${-currentSlide * 100}%)`;
+            updateIndicator();
+        }
+
+        function updateIndicator() {
+            indicators.forEach((indicator, index) => {
+                indicator.classList.toggle('active', index === (currentSlide - 1) % totalSlide);
+            });
+        }
+
+        function moveCarousel(step) {
+            currentSlide += step;
+            updateCarousel();
+            resetAutoSlide();
+        }
+
+        function jumpToSlide(index) {
+            currentSlide = index + 1;
+            updateCarousel();
+            resetAutoSlide();
+        }
+
+        function startAutoSlide() {
+            autoSlideTimeout = setTimeout(() => {
+                moveCarousel(1);
+            }, 5000);
+        }
+
+        function resetAutoSlide() {
+            clearTimeout(autoSlideTimeout);
+            startAutoSlide();
+        }
+
+        setInitialPosition();
+        startAutoSlide();
+
+        carouselImages.addEventListener('transitionend', () => {
+            if (currentSlide === 0){
+                carouselImages.style.transition = 'none';
+                carouselImages.style.transform = `translateX(${-currentSlide * 100}%)`;
+                setTimeout(() => {
+                    carouselImages.style.transition = 'transform 1s ease-in-out';
+                }, 50);
+            } else if (currentSlide === totalSlide + 1){
+                carouselImages.style.transition = 'none';
+                carouselImages.style.transform = `translateX(${-currentSlide * 100}%)`;
+                setTimeout(() => {
+                    carouselImages.style.transition = 'transform 1s ease-in-out';
+                }, 50);
+            }
+        });
+
+    </script>
+
+</body>
+</html>
